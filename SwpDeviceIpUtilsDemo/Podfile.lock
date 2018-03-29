@@ -1,0 +1,16 @@
+PODS:
+  - SwpDeviceIpUtils (1.0.0)
+
+DEPENDENCIES:
+  - SwpDeviceIpUtils (from `../`)
+
+EXTERNAL SOURCES:
+  SwpDeviceIpUtils:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  SwpDeviceIpUtils: 4c762d4ad67cc9cbe7b95fd8e61f8d7074e360d4
+
+PODFILE CHECKSUM: 3664da196bf80b6bdd806c1823f279045c69339a
+
+COCOAPODS: 1.5.0.beta.1

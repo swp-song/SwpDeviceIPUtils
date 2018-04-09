@@ -8,8 +8,8 @@
 
 Pod::Spec.new do |s|
   s.name             = 'SwpDeviceIpUtils'
-  s.version          = '1.0.0'
-  s.summary          = ' 获取 iOS 设备 IP 的工具 '
+  s.version          = '1.1.0'
+  s.summary          = ' 获取 iOS 设备 Ip 的工具 '
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: 获取 iOS 设备 IP 的工具
+TODO: 获取 iOS 设备 Ip 的工具
                        DESC
 
   s.homepage         = 'https://github.com/swp-song/SwpDeviceIpUtils'
@@ -30,7 +30,8 @@ TODO: 获取 iOS 设备 IP 的工具
 
   s.ios.deployment_target = '8.0'
 
-  s.source_files = 'SwpDeviceIpUtils/**/*.{h,m}'
+  s.source_files          = 'SwpDeviceIpUtils/Class/**/*.{h,m}'
+  s.resource              = 'SwpDeviceIpUtils/Resources/SwpDeviceIpUtils.bundle'
 
   # s.resource_bundles = {
   #   'SwpDeviceIpUtils' => ['SwpDeviceIpUtils/Assets/*.png']

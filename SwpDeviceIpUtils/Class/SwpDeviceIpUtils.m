@@ -17,13 +17,35 @@
 
 #define swp_device_utils_inline __inline__ __attribute__((always_inline))
 
-#define SWP_DEVICE_UTILS_CELLULAR   @"pdp_ip0"
-#define SWP_DEVICE_UTILS_WIFI       @"en0"
-#define SWP_DEVICE_UTILS_VPN        @"utun0"
-#define SWP_DEVICE_UTILS_IPV4       @"ipv4"
-#define SWP_DEVICE_UTILS_IPV6       @"ipv6"
+NSString * const  kSwpDeviceIpUtilsCellular  = @"pdp_ip0";
+NSString * const  kSwpDeviceIpUtilsWIFI      = @"en0";
+NSString * const  kSwpDeviceIpUtilsVPN       = @"utun0";
+NSString * const  kSwpDeviceIpUtilsIPV4      = @"ipv4";
+NSString * const  kSwpDeviceIpUtilsIPV6      = @"ipv6";
 
 @implementation SwpDeviceIpUtils
+
+/**
+ *  @author swp_song
+ *
+ *  @brief  swpDeviceIpUtilsInfo    ( 获取 SwpDeviceIpUtils 信息 )
+ *
+ *  @return NSDictionary
+ */
++ (NSDictionary *)swpDeviceIpUtilsInfo {
+    return [NSDictionary dictionaryWithContentsOfFile:[NSBundle.mainBundle pathForResource:@"SwpDeviceIpUtils.bundle/SwpDeviceIpUtils.plist" ofType:nil]].copy;
+}
+
+/**
+ *  @author swp_song
+ *
+ *  @brief  swpDeviceIpUtilsVersion ( 获取 SwpDeviceIpUtils 版本号 )
+ *
+ *  @return NSString
+ */
++ (NSString *)swpDeviceIpUtilsVersion {
+    return [self.class swpDeviceIpUtilsInfo][@"Version"];
+}
 
 /**
  *  @author swp_song
@@ -132,7 +154,7 @@ NSString * SwpGetDeviceLocalIpAddress(SwpDeviceIpUtilsAddressType addressesType)
 /**
  *  @author swp_song
  *
- *  @brief  SwpGetDeviceNetworkIpAddresses  ( 获取当前设备网络 Ip 信息 )
+ *  @brief  swpGetDeviceNetworkIpAddresses  ( 获取当前设备网络 Ip 信息, 需要设置网络 HTTP 可以访问 )
  *
  *  @return NSDictionary
  */
@@ -143,7 +165,7 @@ NSString * SwpGetDeviceLocalIpAddress(SwpDeviceIpUtilsAddressType addressesType)
 /**
  *  @author swp_song
  *
- *  @brief  SwpGetDeviceNetworkIpAddresses  ( 获取当前设备网络 Ip 信息 )
+ *  @brief  SwpGetDeviceNetworkIpAddresses  ( 获取当前设备网络 Ip 信息, 需要设置网络 HTTP 可以访问 )
  *
  *  @return NSDictionary
  */
@@ -154,7 +176,7 @@ NSDictionary * SwpGetDeviceNetworkIpAddresses() {
 /**
  *  @author swp_song
  *
- *  @brief  swpGetDeviceNetworkIpAddress    ( 获取当前设备网络 Ip 地址 )
+ *  @brief  swpGetDeviceNetworkIpAddress    ( 获取当前设备网络 Ip 地址, 需要设置网络 HTTP 可以访问 )
  *
  *  @return NSString
  */
@@ -166,7 +188,7 @@ NSDictionary * SwpGetDeviceNetworkIpAddresses() {
 /**
  *  @author swp_song
  *
- *  @brief  SwpGetDeviceNetworkIpAddress    ( 获取当前设备网络 Ip 地址 )
+ *  @brief  SwpGetDeviceNetworkIpAddress    ( 获取当前设备网络 Ip 地址, 需要设置网络 HTTP 可以访问 )
  *
  *  @return NSString
  */
@@ -279,12 +301,12 @@ static swp_device_utils_inline NSDictionary * _GetDevicepLocalAddresses() {
                 NSString *type;
                 if(addr->sin_family == AF_INET) {
                     if(inet_ntop(AF_INET, &addr->sin_addr, addrBuf, INET_ADDRSTRLEN)) {
-                        type = SWP_DEVICE_UTILS_IPV4;
+                        type = kSwpDeviceIpUtilsIPV4;
                     }
                 } else {
                     const struct sockaddr_in6 *addr6 = (const struct sockaddr_in6*)interface->ifa_addr;
                     if(inet_ntop(AF_INET6, &addr6->sin6_addr, addrBuf, INET6_ADDRSTRLEN)) {
-                        type = SWP_DEVICE_UTILS_IPV6;
+                        type = kSwpDeviceIpUtilsIPV6;
                     }
                 }
                 if(type) {
@@ -311,25 +333,8 @@ static swp_device_utils_inline NSDictionary * _GetDevicepLocalAddresses() {
  */
 static swp_device_utils_inline NSString * _GetDevicepLocalAddress(SwpDeviceIpUtilsAddressType addressType) {
     
-    NSArray *ipv4s = @[
-                       SWP_DEVICE_UTILS_VPN      @"/" SWP_DEVICE_UTILS_IPV4,
-                       SWP_DEVICE_UTILS_VPN      @"/" SWP_DEVICE_UTILS_IPV6,
-                       SWP_DEVICE_UTILS_WIFI     @"/" SWP_DEVICE_UTILS_IPV4,
-                       SWP_DEVICE_UTILS_WIFI     @"/" SWP_DEVICE_UTILS_IPV6,
-                       SWP_DEVICE_UTILS_CELLULAR @"/" SWP_DEVICE_UTILS_IPV4,
-                       SWP_DEVICE_UTILS_CELLULAR @"/" SWP_DEVICE_UTILS_IPV6
-                       ];
-    NSArray *ipv6s =  @[
-                        SWP_DEVICE_UTILS_VPN      @"/" SWP_DEVICE_UTILS_IPV6,
-                        SWP_DEVICE_UTILS_VPN      @"/" SWP_DEVICE_UTILS_IPV4,
-                        SWP_DEVICE_UTILS_WIFI     @"/" SWP_DEVICE_UTILS_IPV6,
-                        SWP_DEVICE_UTILS_WIFI     @"/" SWP_DEVICE_UTILS_IPV4,
-                        SWP_DEVICE_UTILS_CELLULAR @"/" SWP_DEVICE_UTILS_IPV6,
-                        SWP_DEVICE_UTILS_CELLULAR @"/" SWP_DEVICE_UTILS_IPV4
-                        ];
-    
-    NSArray      *searchs   = addressType ? ipv6s : ipv4s;
-    NSDictionary *addresses = SwpGetDeviceLocalIpAddresses();
+    NSArray      *searchs   = addressType ? _GetIpv6() : _GetIpv4();
+    NSDictionary *addresses = _GetDevicepLocalAddresses();
     __block NSString *address;
     [searchs enumerateObjectsUsingBlock:^(NSString * _Nonnull key, NSUInteger idx, BOOL * _Nonnull stop) {
         address = addresses[key];
@@ -366,6 +371,48 @@ static swp_device_utils_inline NSDictionary * _GetDevicepNetworkAddresses() {
 static swp_device_utils_inline NSString * _GetDevicepNetworkAddress() {
     NSString *ip = _GetDevicepNetworkAddresses()[@"ip"];
     return ip.length ? ip :  @"0.0.0.0";
+}
+
+
+/**
+ *  @author swp_song
+ *
+ *  @brief  _GetIpv4    ( 获取当前设备 Ipv4  )
+ *
+ *  @return NSArray
+ */
+static swp_device_utils_inline NSArray * _GetIpv4() {
+    
+    NSArray *ipv4s = @[
+                       [NSString stringWithFormat:@"%@/%@",  kSwpDeviceIpUtilsVPN,  kSwpDeviceIpUtilsIPV4],
+                       [NSString stringWithFormat:@"%@/%@",  kSwpDeviceIpUtilsVPN,  kSwpDeviceIpUtilsIPV6],
+                       [NSString stringWithFormat:@"%@/%@",  kSwpDeviceIpUtilsWIFI,  kSwpDeviceIpUtilsIPV4],
+                       [NSString stringWithFormat:@"%@/%@",  kSwpDeviceIpUtilsWIFI,  kSwpDeviceIpUtilsIPV6],
+                       [NSString stringWithFormat:@"%@/%@",  kSwpDeviceIpUtilsCellular,  kSwpDeviceIpUtilsIPV4],
+                       [NSString stringWithFormat:@"%@/%@",  kSwpDeviceIpUtilsCellular,  kSwpDeviceIpUtilsIPV6],
+                       ];
+    return ipv4s;
+}
+
+/**
+ *  @author swp_song
+ *
+ *  @brief  _GetIpv6    ( 获取当前设备 Ipv6  )
+ *
+ *  @return NSArray
+ */
+static swp_device_utils_inline NSArray * _GetIpv6() {
+    
+    NSArray *ipv6s =  @[
+                        [NSString stringWithFormat:@"%@/%@",  kSwpDeviceIpUtilsVPN,  kSwpDeviceIpUtilsIPV6],
+                        [NSString stringWithFormat:@"%@/%@",  kSwpDeviceIpUtilsVPN,  kSwpDeviceIpUtilsIPV4],
+                        [NSString stringWithFormat:@"%@/%@",  kSwpDeviceIpUtilsWIFI,  kSwpDeviceIpUtilsIPV6],
+                        [NSString stringWithFormat:@"%@/%@",  kSwpDeviceIpUtilsWIFI,  kSwpDeviceIpUtilsIPV4],
+                        [NSString stringWithFormat:@"%@/%@",  kSwpDeviceIpUtilsCellular,  kSwpDeviceIpUtilsIPV6],
+                        [NSString stringWithFormat:@"%@/%@",  kSwpDeviceIpUtilsCellular,  kSwpDeviceIpUtilsIPV4],
+                        ];
+    return ipv6s;
+    
 }
 
 

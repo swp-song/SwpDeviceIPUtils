@@ -1,1 +1,1 @@
-../../../../../SwpDeviceIpUtils/SwpDeviceIpUtils.h
+../../../../../SwpDeviceIpUtils/Class/SwpDeviceIpUtils.h

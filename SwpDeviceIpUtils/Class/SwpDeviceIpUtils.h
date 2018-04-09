@@ -10,6 +10,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+FOUNDATION_EXPORT NSString * const kSwpDeviceIpUtilsCellular;
+FOUNDATION_EXPORT NSString * const kSwpDeviceIpUtilsWIFI;
+FOUNDATION_EXPORT NSString * const kSwpDeviceIpUtilsVPN;
+FOUNDATION_EXPORT NSString * const kSwpDeviceIpUtilsIPV4;
+FOUNDATION_EXPORT NSString * const kSwpDeviceIpUtilsIPV6;
+
 /**
  - SwpDeviceIpUtilsAddressType
  - SwpDeviceIpUtilsAddressIPv4:
@@ -22,6 +28,25 @@ typedef NS_ENUM(NSInteger, SwpDeviceIpUtilsAddressType) {
 };
 
 @interface SwpDeviceIpUtils : NSObject
+
+/**
+ *  @author swp_song
+ *
+ *  @brief  swpDeviceIpUtilsInfo    ( 获取 SwpDeviceIpUtils 信息 )
+ *
+ *  @return NSDictionary
+ */
++ (NSDictionary *)swpDeviceIpUtilsInfo;
+
+
+/**
+ *  @author swp_song
+ *
+ *  @brief  swpDeviceIpUtilsVersion ( 获取 SwpDeviceIpUtils 版本号 )
+ *
+ *  @return NSString
+ */
++ (NSString *)swpDeviceIpUtilsVersion;
 
 /**
  *  @author swp_song
@@ -108,7 +133,7 @@ NSString * SwpGetDeviceLocalIpAddress(SwpDeviceIpUtilsAddressType addressesType)
 /**
  *  @author swp_song
  *
- *  @brief  swpGetDeviceNetworkIpAddresses  ( 获取当前设备网络 Ip 信息 )
+ *  @brief  swpGetDeviceNetworkIpAddresses  ( 获取当前设备网络 Ip 信息, 需要设置网络 HTTP 可以访问 )
  *
  *  @return NSDictionary
  */
@@ -117,7 +142,7 @@ NSString * SwpGetDeviceLocalIpAddress(SwpDeviceIpUtilsAddressType addressesType)
 /**
  *  @author swp_song
  *
- *  @brief  SwpGetDeviceNetworkIpAddresses  ( 获取当前设备网络 Ip 信息 )
+ *  @brief  SwpGetDeviceNetworkIpAddresses  ( 获取当前设备网络 Ip 信息, 需要设置网络 HTTP 可以访问 )
  *
  *  @return NSDictionary
  */
@@ -126,7 +151,7 @@ NSDictionary * SwpGetDeviceNetworkIpAddresses(void);
 /**
  *  @author swp_song
  *
- *  @brief  swpGetDeviceNetworkIpAddress    ( 获取当前设备网络 Ip 地址 )
+ *  @brief  swpGetDeviceNetworkIpAddress    ( 获取当前设备网络 Ip 地址, 需要设置网络 HTTP 可以访问 )
  *
  *  @return NSString
  */
@@ -135,7 +160,7 @@ NSDictionary * SwpGetDeviceNetworkIpAddresses(void);
 /**
  *  @author swp_song
  *
- *  @brief  SwpGetDeviceNetworkIpAddress    ( 获取当前设备网络 Ip 地址 )
+ *  @brief  SwpGetDeviceNetworkIpAddress    ( 获取当前设备网络 Ip 地址, 需要设置网络 HTTP 可以访问 )
  *
  *  @return NSString
  */

@@ -20,11 +20,27 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    NSLog(@"%@", SwpGetDeviceLocalWIFIIpAddress());
-    NSLog(@"%@", SwpGetDeviceLocalIpAddresses());
-    NSLog(@"%@", SwpGetDeviceLocalIpAddress(SwpDeviceIpUtilsAddressIPv6));
-    NSLog(@"%@", SwpGetDeviceNetworkIpAddresses());
-    NSLog(@"%@", SwpGetDeviceNetworkIpAddress());
+
+    
+    
+    NSLog(@"swpDeviceIpUtilsInfo    = %@", [SwpDeviceIpUtils swpDeviceIpUtilsInfo]);
+    NSLog(@"swpDeviceIpUtilsVersion = %@", [SwpDeviceIpUtils swpDeviceIpUtilsVersion]);
+   
+    
+    NSLog(@"SwpGetDeviceLocalWIFIIpAddress  = %@", SwpGetDeviceLocalWIFIIpAddress());
+    NSLog(@"SwpGetDeviceLocalIpAddresses    = %@", SwpGetDeviceLocalIpAddresses());
+    NSLog(@"SwpGetDeviceLocalIpAddress      = %@", SwpGetDeviceLocalIpAddress(SwpDeviceIpUtilsAddressIPv6));
+    
+    /*
+     SwpGetDeviceNetworkIpAddress， SwpGetDeviceNetworkIpAddress 网络获取ip时，需要设置 App 可以使用 http 请求
+     <key>NSAppTransportSecurity</key>
+     <dict>
+     <key>NSAllowsArbitraryLoads</key>
+     <true/>
+     </dict>
+     */
+    NSLog(@"SwpGetDeviceNetworkIpAddresses  = %@", SwpGetDeviceNetworkIpAddresses());
+    NSLog(@"SwpGetDeviceNetworkIpAddress    = %@", SwpGetDeviceNetworkIpAddress());
 }
 
 

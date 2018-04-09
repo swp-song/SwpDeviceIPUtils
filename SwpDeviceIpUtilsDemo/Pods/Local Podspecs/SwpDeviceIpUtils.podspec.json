@@ -1,6 +1,6 @@
 {
   "name": "SwpDeviceIpUtils",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "summary": "获取 iOS 设备 Ip 的工具",
   "description": "TODO: 获取 iOS 设备 Ip 的工具",
   "homepage": "https://github.com/swp-song/SwpDeviceIpUtils",
@@ -13,11 +13,12 @@
   },
   "source": {
     "git": "https://github.com/swp-song/SwpDeviceIpUtils.git",
-    "tag": "1.1.0"
+    "tag": "1.1.1"
   },
   "platforms": {
     "ios": "8.0"
   },
   "source_files": "SwpDeviceIpUtils/Class/**/*.{h,m}",
-  "resources": "SwpDeviceIpUtils/Resources/SwpDeviceIpUtils.bundle"
+  "resources": "SwpDeviceIpUtils/Resources/SwpDeviceIpUtils.bundle",
+  "requires_arc": true
 }
